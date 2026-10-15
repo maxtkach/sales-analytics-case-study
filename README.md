@@ -21,22 +21,22 @@ The business processed hundreds of B2B transactions through legacy 1C accounting
 
 ```mermaid
 graph TD
-    File[CSV / 1C Hierarchical XLSX] --> Parser[Dual-Mode Parser: PapaParse / SheetJS]
-    Parser --> Detector[Multi-Lingual Schema Detector]
-    Detector --> Ingestion[Deterministic Deduplication: SHA-256 Hash]
-    Ingestion --> NormalizedRows[(Normalized Canonical SalesRow[])]
+    File["CSV / 1C Hierarchical XLSX"] --> Parser["Dual-Mode Parser: PapaParse / SheetJS"]
+    Parser --> Detector["Multi-Lingual Schema Detector"]
+    Detector --> Ingestion["Deterministic Deduplication: SHA-256 Hash"]
+    Ingestion --> NormalizedRows[("Normalized Canonical SalesRow Records")]
     
-    subgraph Client-Side In-Memory Engine
-        NormalizedRows --> Engine[In-Memory OLAP Pipeline]
-        Engine --> RFM[Quintile-Ranked RFM Segmentation]
-        Engine --> Anomaly[Order & Revenue Anomaly Detector]
-        Engine --> CoPurchase[Combinatorial Market Basket Analysis]
+    subgraph EngineGroup ["Client-Side In-Memory Engine"]
+        NormalizedRows --> Engine["In-Memory OLAP Pipeline"]
+        Engine --> RFM["Quintile-Ranked RFM Segmentation"]
+        Engine --> Anomaly["Order & Revenue Anomaly Detector"]
+        Engine --> CoPurchase["Combinatorial Market Basket Analysis"]
     end
 
-    subgraph UI Dashboard
-        RFM --> SegmentsUI[Segment Distribution & Retention Matrix]
-        Anomaly --> AlertsUI[Risk Alerts & Large Order Spikes]
-        CoPurchase --> AffinityUI[Product Affinity Graph]
+    subgraph UIGroup ["UI Dashboard"]
+        RFM --> SegmentsUI["Segment Distribution & Retention Matrix"]
+        Anomaly --> AlertsUI["Risk Alerts & Large Order Spikes"]
+        CoPurchase --> AffinityUI["Product Affinity Graph"]
     end
 ```
 
